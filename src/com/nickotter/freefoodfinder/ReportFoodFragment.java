@@ -1,6 +1,8 @@
 package com.nickotter.freefoodfinder;
 
 import com.nickotter.freefoodfinder.R;
+import com.nickotter.freefoodfinder.data.Report;
+import com.nickotter.freefoodfinder.data.SaveReport;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -40,7 +42,7 @@ public class ReportFoodFragment  extends Fragment {
     	switch(item.getItemId()) {
     		case R.id.menu_save:
     			Log.v(LOGTAG, "onOptionsItemSelected: Clicked the Save Menu item");
-    			this.saveReport();
+    			this.createReport();
     			break;
     		default:
     			Log.v(LOGTAG, "onOptionsItemSelected: failed to identify what was clicked");
@@ -50,14 +52,20 @@ public class ReportFoodFragment  extends Fragment {
     	return true;
     }
     
-    private void saveReport() {
+    private void createReport() {
     	EditText title = (EditText)getView().findViewById(R.id.report_food_title);
     	EditText locationDescription = (EditText)getView().findViewById(R.id.report_food_location);
     	EditText description = (EditText)getView().findViewById(R.id.report_food_description);
     	
-    	Log.v(LOGTAG, "saveReport: Title=" + title.getText().toString());
-    	Log.v(LOGTAG, "saveReport: Location Description=" + locationDescription.getText().toString());
-    	Log.v(LOGTAG, "saveReport: Description= " + description.getText().toString());
+    	Log.v(LOGTAG, "createReport: creating report");
+    	
+    	Report report = new Report();
+    	report.setTitle(title.getText().toString());
+    	report.setLocationDescription(locationDescription.getText().toString());
+    	report.setDescription(description.getText().toString());
+    	
+    	Log.v(LOGTAG, "createReport: sending the report to SaveReport.save");
+    	SaveReport.save(report);
     }
 	
 }
