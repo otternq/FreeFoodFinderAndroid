@@ -65,7 +65,7 @@ public class ReportFoodFragment  extends Fragment {
     	report.setDescription(description.getText().toString());
     	
     	Log.v(LOGTAG, "createReport: sending the report to SaveReport.save");
-    	new SaveReport(getString(R.string.mongolabAPIKey), report).execute();
+    	new SaveReport(getActivity(), getString(R.string.mongolabAPIKey), report).execute();
     }
 	
 }

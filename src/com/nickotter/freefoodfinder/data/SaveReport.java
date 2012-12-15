@@ -20,8 +20,10 @@ import org.apache.http.protocol.HTTP;
 
 import com.google.gson.Gson;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 public class SaveReport extends AsyncTask<String, String, String> {
 	
@@ -31,9 +33,11 @@ public class SaveReport extends AsyncTask<String, String, String> {
 	private static final String baseEndpoint = "https://api.mongolab.com/api/1/databases/"; 
 	private static final String entriesEndpoint = baseEndpoint + "freefoodfinder/collections/entries";
 	
+	private Context appContext;
 	private Report report;
 	
-	public SaveReport(String apiKey, Report report) {
+	public SaveReport(Context appContext, String apiKey, Report report) {
+		this.appContext = appContext;
 		this.apiKey = apiKey;
 		this.report = report;
 	}
@@ -100,6 +104,14 @@ public class SaveReport extends AsyncTask<String, String, String> {
 	@Override
 	protected void onPostExecute(String result) {
 		super.onPostExecute(result);
+		
+		Log.v(LOGTAG, "onPostExecute: creating toast");
+		
+		CharSequence text = "Saved Entry";
+		int duration = Toast.LENGTH_SHORT;
+
+		Toast toast = Toast.makeText(this.appContext, text, duration);
+		toast.show();
 		
 		Log.v(LOGTAG, "onPostExecute: result is: "+ result);
 	}

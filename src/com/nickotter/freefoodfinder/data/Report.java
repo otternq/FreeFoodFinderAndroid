@@ -1,12 +1,18 @@
 package com.nickotter.freefoodfinder.data;
 
+import java.util.Hashtable;
+
 public class Report {
 	
 	private String title;
 	private String locationDescription;
 	private String description;
-	private Double lat;
-	private Double lon;
+	private Hashtable<String, Double> location;
+	
+	public Report() {
+		this.setLocation(3.0, 5.0);
+	}
+	
 	/**
 	 * @return the title
 	 */
@@ -43,29 +49,11 @@ public class Report {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	/**
-	 * @return the lat
-	 */
-	public Double getLat() {
-		return lat;
-	}
-	/**
-	 * @param lat the lat to set
-	 */
-	public void setLat(Double lat) {
-		this.lat = lat;
-	}
-	/**
-	 * @return the lon
-	 */
-	public Double getLon() {
-		return lon;
-	}
-	/**
-	 * @param lon the lon to set
-	 */
-	public void setLon(Double lon) {
-		this.lon = lon;
+	
+	public void setLocation(Double lat, Double lon) {
+		this.location = new Hashtable<String, Double>();
+		this.location.put("lat", lat);
+		this.location.put("long", lon);
 	}
 
 }
