@@ -10,7 +10,6 @@ public class Report {
 	private Hashtable<String, Double> location;
 	
 	public Report() {
-		this.setLocation(3.0, 5.0);
 	}
 	
 	/**

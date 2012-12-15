@@ -3,6 +3,7 @@ package com.nickotter.freefoodfinder;
 import com.nickotter.freefoodfinder.R;
 import com.nickotter.freefoodfinder.data.Report;
 import com.nickotter.freefoodfinder.data.SaveReport;
+import com.nickotter.freefoodfinder.gps.GPSTracker;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -64,8 +65,22 @@ public class ReportFoodFragment  extends Fragment {
     	report.setLocationDescription(locationDescription.getText().toString());
     	report.setDescription(description.getText().toString());
     	
-    	Log.v(LOGTAG, "createReport: sending the report to SaveReport.save");
-    	new SaveReport(getActivity(), getString(R.string.mongolabAPIKey), report).execute();
+    	GPSTracker gps = new GPSTracker(getActivity());
+    	if(gps.canGetLocation()) {//gps enabled
+    		Log.v(LOGTAG, "createReport: able to find location");
+    		report.setLocation(
+    				gps.getLatitude(), 
+    				gps.getLongitude()
+			);
+    		
+    		Log.v(LOGTAG, "createReport: sending the report to SaveReport.save");
+        	new SaveReport(getActivity(), getString(R.string.mongolabAPIKey), report).execute();
+    	} else {
+    		Log.v(LOGTAG, "createReport: unable to find location, sending to settings");
+    		gps.showSettingsAlert();
+    	}
+    	
+    	Log.v(LOGTAG, "createReport: X");
     }
 	
 }
