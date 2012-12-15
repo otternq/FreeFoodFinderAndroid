@@ -1,10 +1,11 @@
-package com.nickotter;
+package com.nickotter.freefoodfinder;
 
 import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ActionBar.Tab;
 import android.view.Menu;
+import com.nickotter.freefoodfinder.R;
 
 public class MainActivity extends Activity {
 

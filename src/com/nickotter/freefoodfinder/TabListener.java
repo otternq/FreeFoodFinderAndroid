@@ -1,10 +1,11 @@
-package com.nickotter;
+package com.nickotter.freefoodfinder;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
+import com.nickotter.freefoodfinder.R;
 
 public class TabListener<T extends Fragment> implements ActionBar.TabListener {
 	
