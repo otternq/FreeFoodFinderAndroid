@@ -7,5 +7,13 @@
     
     <string name="menu_find_food">Find Food</string>
     <string name="menu_report_food">Report Food</string>
+    
+    <string name="menu_report_food_save">Save</string>
+    <string name="menu_find_food_refresh">Refresh</string>
+    
+    <!-- values for menu/report_food -->
+    <string name="report_food_title_hint">Title</string>
+    <string name="report_food_location_hint">Short Description of Where</string>
+    <string name="report_food_description_hint">Whats There?</string>
 
 </resources>
