@@ -47,4 +47,5 @@ References
 - [Android Documentation - onOptionsItemSelected](http://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem(http://developer.android.com/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)
 - [Android Documentation - String Resources](http://developer.android.com/guide/topics/resources/string-resource.html)
 - [AndroidSnippets - HTTP Post Request with HttpClient](http://www.androidsnippets.com/executing-a-http-post-request-with-httpclient)
+- [RESTful Java Client With Apache HttpClient](http://www.mkyong.com/webservices/jax-rs/restful-java-client-with-apache-httpclient/)
 - [MongoDB for mobile app backends](http://www.slideshare.net/marakana/learn-5611322) - Specifically slides 30/31
