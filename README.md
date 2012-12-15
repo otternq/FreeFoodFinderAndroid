@@ -49,6 +49,7 @@ References
 - [Android Documentation - Toasts](http://developer.android.com/guide/topics/ui/notifiers/toasts.html)
 - [AndroidSnippets - HTTP Post Request with HttpClient](http://www.androidsnippets.com/executing-a-http-post-request-with-httpclient)
 - [RESTful Java Client With Apache HttpClient](http://www.mkyong.com/webservices/jax-rs/restful-java-client-with-apache-httpclient/)
+- [Android GPS, Location Manager Tutorial](http://www.androidhive.info/2012/07/android-gps-location-manager-tutorial/) - Source of the GPSTracker Class
 - [MongoDB for mobile app backends](http://www.slideshare.net/marakana/learn-5611322) - Specifically slides 30/31
 - [MongoDB Documentation - Geospatial Indexes](http://docs.mongodb.org/manual/applications/geospatial-indexes/)
 - [W3.org HTTP Protocal Status Codes](http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html)
