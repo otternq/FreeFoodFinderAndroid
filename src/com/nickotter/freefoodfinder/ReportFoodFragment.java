@@ -74,7 +74,8 @@ public class ReportFoodFragment  extends Fragment {
 			);
     		
     		Log.v(LOGTAG, "createReport: sending the report to SaveReport.save");
-        	new SaveReport(getActivity(), getString(R.string.mongolabAPIKey), report).execute();
+        	new SaveReport(getActivity(), getActivity().getActionBar(), getString(R.string.mongolabAPIKey), report).execute();
+        	
     	} else {
     		Log.v(LOGTAG, "createReport: unable to find location, sending to settings");
     		gps.showSettingsAlert();
@@ -82,5 +83,6 @@ public class ReportFoodFragment  extends Fragment {
     	
     	Log.v(LOGTAG, "createReport: X");
     }
+    
 	
 }

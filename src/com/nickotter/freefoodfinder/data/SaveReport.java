@@ -20,6 +20,7 @@ import org.apache.http.protocol.HTTP;
 
 import com.google.gson.Gson;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -34,10 +35,12 @@ public class SaveReport extends AsyncTask<String, String, String> {
 	private static final String entriesEndpoint = baseEndpoint + "freefoodfinder/collections/entries";
 	
 	private Context appContext;
+	private ActionBar actionbar;
 	private Report report;
 	
-	public SaveReport(Context appContext, String apiKey, Report report) {
+	public SaveReport(Context appContext, ActionBar actionbar, String apiKey, Report report) {
 		this.appContext = appContext;
+		this.actionbar = actionbar;
 		this.apiKey = apiKey;
 		this.report = report;
 	}
@@ -114,6 +117,20 @@ public class SaveReport extends AsyncTask<String, String, String> {
 		toast.show();
 		
 		Log.v(LOGTAG, "onPostExecute: result is: "+ result);
+		
+		Log.v(LOGTAG, "onPostExecute: going to find food tab");
+		this.switchToFindFood();
 	}
+	
+	public void switchToFindFood() {
+    	Log.v(LOGTAG, "switchToFindFood: E");
+    	
+    	int position = 0;
+    	Log.v(LOGTAG, "switchToFindFood: switching to position="+ position);
+    	this.actionbar.setSelectedNavigationItem(position);
+
+    	
+    	Log.v(LOGTAG, "switchToFindFood: X");
+    }
 
 }
