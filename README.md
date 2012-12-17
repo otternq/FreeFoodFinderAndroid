@@ -10,6 +10,14 @@ Missing File
 This project depends on a number of API keys, the file that contains these keys
 is expected to be contained at `res/values/privateStrings.xml`
 
+```
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mongolabAPIKey">YOUR_MONGOLAB_API_KEY_HERE</string>
+    <string name="googleAPIKey">YOUR_GOOGLE_API_KEY_HERE</string>
+</resources>
+```
+
 Dependencies
 --------
 
@@ -21,6 +29,9 @@ A JSON library for Java
 - [URL](http://code.google.com/p/google-gson/)
 - [User Guide](https://sites.google.com/site/gson/gson-user-guide)
 - [Downloads](http://code.google.com/p/google-gson/downloads/list)
+
+####Google Play services APIs####
+See http://developer.android.com/google/play-services/index.html for more details
 
 ###External###
 
