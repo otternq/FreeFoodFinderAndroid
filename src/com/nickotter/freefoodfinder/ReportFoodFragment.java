@@ -18,7 +18,7 @@ import android.util.Log;
 
 public class ReportFoodFragment  extends Fragment {
 	
-	private static final String LOGTAG = "ReportFodFragment";
+	private static final String LOGTAG = "ReportFoodFragment";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
