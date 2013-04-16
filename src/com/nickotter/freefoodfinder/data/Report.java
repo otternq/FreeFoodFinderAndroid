@@ -2,12 +2,15 @@ package com.nickotter.freefoodfinder.data;
 
 import java.util.Hashtable;
 
+import com.google.android.gms.maps.model.LatLng;
+
+
 public class Report {
 	
 	private String title;
 	private String locationDescription;
 	private String description;
-	private Hashtable<String, Double> location;
+	private MyLatLng location;
 	
 	public Report() {
 	}
@@ -49,10 +52,15 @@ public class Report {
 		this.description = description;
 	}
 	
-	public void setLocation(Double lat, Double lon) {
-		this.location = new Hashtable<String, Double>();
-		this.location.put("lat", lat);
-		this.location.put("long", lon);
+	public void setLocation(MyLatLng temp) {
+		this.location = temp;
+	}
+	
+	public LatLng getLocation() {
+		return new LatLng(
+			this.location.getLat(),
+			this.location.getLng()
+		);
 	}
 
 }

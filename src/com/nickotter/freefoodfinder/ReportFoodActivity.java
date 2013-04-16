@@ -1,39 +1,42 @@
 package com.nickotter.freefoodfinder;
 
 import com.nickotter.freefoodfinder.R;
+import com.nickotter.freefoodfinder.data.MyLatLng;
 import com.nickotter.freefoodfinder.data.Report;
 import com.nickotter.freefoodfinder.data.SaveReport;
 import com.nickotter.freefoodfinder.gps.GPSTracker;
 
-import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.util.Log;
 
-public class ReportFoodFragment  extends Fragment {
+import com.actionbarsherlock.app.ActionBar;
+import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuInflater;
+import com.actionbarsherlock.view.MenuItem;
+
+
+public class ReportFoodActivity extends SherlockActivity {
 	
 	private static final String LOGTAG = "ReportFoodFragment";
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
     	Log.v(LOGTAG, "onCreateView: E");
-    	
-    	this.setHasOptionsMenu(true);
+    	super.onCreate(savedInstanceState);
     	
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.report_food, container, false);
+        setContentView(R.layout.report_food);
+        
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.report_food, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getSupportMenuInflater().inflate(R.menu.report_food, menu);
+        return true;
     }
     
     @Override
@@ -41,9 +44,15 @@ public class ReportFoodFragment  extends Fragment {
     	Log.v(LOGTAG, "onOptionsItemSelected: E");
     	
     	switch(item.getItemId()) {
+    		case android.R.id.home:
+    		case R.id.menu_cancel:
+    			Log.v(LOGTAG, "onOptionsItemSelected: Clicked the home or cancel button");
+    			finish();
+    		break;
     		case R.id.menu_save:
     			Log.v(LOGTAG, "onOptionsItemSelected: Clicked the Save Menu item");
     			this.createReport();
+    			finish();
     			break;
     		default:
     			Log.v(LOGTAG, "onOptionsItemSelected: failed to identify what was clicked");
@@ -54,9 +63,9 @@ public class ReportFoodFragment  extends Fragment {
     }
     
     private void createReport() {
-    	EditText title = (EditText)getView().findViewById(R.id.report_food_title);
-    	EditText locationDescription = (EditText)getView().findViewById(R.id.report_food_location);
-    	EditText description = (EditText)getView().findViewById(R.id.report_food_description);
+    	EditText title = (EditText)findViewById(R.id.report_food_title);
+    	EditText locationDescription = (EditText)findViewById(R.id.report_food_location);
+    	EditText description = (EditText)findViewById(R.id.report_food_description);
     	
     	Log.v(LOGTAG, "createReport: creating report");
     	
@@ -65,16 +74,18 @@ public class ReportFoodFragment  extends Fragment {
     	report.setLocationDescription(locationDescription.getText().toString());
     	report.setDescription(description.getText().toString());
     	
-    	GPSTracker gps = new GPSTracker(getActivity());
+    	GPSTracker gps = new GPSTracker(this);
     	if(gps.canGetLocation()) {//gps enabled
     		Log.v(LOGTAG, "createReport: able to find location");
     		report.setLocation(
-    				gps.getLatitude(), 
-    				gps.getLongitude()
+    				new MyLatLng(
+    						gps.getLatitude(), 
+    						gps.getLongitude()
+    				)
 			);
     		
     		Log.v(LOGTAG, "createReport: sending the report to SaveReport.save");
-        	new SaveReport(getActivity(), getActivity().getActionBar(), getString(R.string.mongolabAPIKey), report).execute();
+        	new SaveReport(this, getString(R.string.mongolabAPIKey), report).execute();
         	
     	} else {
     		Log.v(LOGTAG, "createReport: unable to find location, sending to settings");
