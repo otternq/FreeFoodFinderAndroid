@@ -1,6 +1,8 @@
 package com.nickotter.freefoodfinder.data;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
@@ -9,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.nickotter.freefoodfinder.utils.AsyncResponse;
 
@@ -27,10 +30,25 @@ public class GetReports extends AsyncTask<String, String, String> {
 	
 	private Context appContext;
 	private Report report;
+
+	protected LatLng location;
 	
-	public GetReports(Context appContext, String apiKey) {
+	public GetReports(Context appContext, String apiKey, LatLng currentLocation) {
 		this.appContext = appContext;
 		this.apiKey = apiKey;
+		this.location = currentLocation;
+	}
+	
+	protected String getUrl() {
+		String url = "";
+		try {
+			url = GetReports.entriesEndpoint + "?q=" + URLEncoder.encode("{\"location\":{\"$near\":[45,-116],\"$maxDistance\":5}}", "UTF-8") + "&apiKey=" + this.apiKey;
+			Log.v(LOGTAG, "query = " + url);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return url;
 	}
 	
 	protected String retrieve() {
@@ -39,7 +57,7 @@ public class GetReports extends AsyncTask<String, String, String> {
 		
 		Log.v(LOGTAG, "e");
 		
-		String url = GetReports.entriesEndpoint + "?apiKey="+this.apiKey;
+		String url = this.getUrl();
 		
 		HttpClient httpclient = new DefaultHttpClient();  
         HttpGet request = new HttpGet(url);  

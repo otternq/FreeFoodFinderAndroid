@@ -36,13 +36,14 @@ public class MainActivity extends SherlockActivity implements AsyncResponse<Stri
 	
 	protected GoogleMap mMap = null;
 	protected List<Marker> markers = new ArrayList<Marker>();
+	protected LatLng current;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		this.loadReports();
+		
 		
 		GPSTracker gps = new GPSTracker(this);
     	if(gps.canGetLocation()) {//gps enabled
@@ -51,11 +52,13 @@ public class MainActivity extends SherlockActivity implements AsyncResponse<Stri
     		this.mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.map))
     		        .getMap();
     		
-    		LatLng current = new LatLng(gps.getLatitude(), gps.getLongitude());
+    		current = new LatLng(gps.getLatitude(), gps.getLongitude());
     		
     		this.mMap.animateCamera(
     				CameraUpdateFactory.newLatLng(current)
     		);
+    		
+    		this.loadReports();
     		
     	} else {
     		Log.v(LOGTAG, "initMap: unable to find location, sending to settings");
@@ -94,7 +97,7 @@ public class MainActivity extends SherlockActivity implements AsyncResponse<Stri
     }
 	
 	protected void loadReports() {
-		new GetReports(this, getString(R.string.mongolabAPIKey)).execute();
+		new GetReports(this, getString(R.string.mongolabAPIKey), this.current).execute();
 	}
 
 	@Override
@@ -103,32 +106,35 @@ public class MainActivity extends SherlockActivity implements AsyncResponse<Stri
 		Gson gson = new Gson();
 		Report[] reports = gson.fromJson(output, Report[].class);
 		
-		this.mMap.clear();
-		
-		Log.v(LOGTAG, "retrieved the following from MongoDB: "+ output);
-		
-		Log.v(LOGTAG, "onPostExecute: creating toast");
-		int duration = Toast.LENGTH_SHORT;
-
-		Toast toast = Toast.makeText(this, "Loaded " + reports.length + " report(s)", duration);
-		toast.show();
-		
-		for (Report temp : reports) {
-			Log.v(LOGTAG, "found report with title=" + temp.getTitle());
-    		
-    		this.mMap.animateCamera(
-    				CameraUpdateFactory.newLatLng(temp.getLocation())
-    		);
-    		
-    		
-    		this.markers.add(
-				this.mMap.addMarker(new MarkerOptions()
-			      .position(temp.getLocation())
-			      .title(temp.getTitle())
-			      .snippet(temp.getDescription())
-				)
-            );
-    		
+		if (reports != null && reports.length > 0) {
+			
+			this.mMap.clear();
+			
+			Log.v(LOGTAG, "retrieved the following from MongoDB: "+ output);
+			
+			Log.v(LOGTAG, "onPostExecute: creating toast");
+			int duration = Toast.LENGTH_SHORT;
+	
+			Toast toast = Toast.makeText(this, "Loaded " + reports.length + " report(s)", duration);
+			toast.show();
+			
+			for (Report temp : reports) {
+				Log.v(LOGTAG, "found report with title=" + temp.getTitle());
+	    		
+	    		this.mMap.animateCamera(
+	    				CameraUpdateFactory.newLatLng(temp.getLocation())
+	    		);
+	    		
+	    		
+	    		this.markers.add(
+					this.mMap.addMarker(new MarkerOptions()
+				      .position(temp.getLocation())
+				      .title(temp.getTitle())
+				      .snippet(temp.getDescription())
+					)
+	            );
+	    		
+			}
 		}
 	}
 
