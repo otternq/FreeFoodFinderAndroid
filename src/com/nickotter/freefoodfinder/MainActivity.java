@@ -86,6 +86,7 @@ public class MainActivity extends SherlockActivity implements AsyncResponse<Stri
         	  return true;
           case R.id.menu_refresh:
         	  this.loadReports();
+        	  return true;
           default: 
         	 Log.v(LOGTAG, "onOptionItemSelected could not match menu item to action. " + item.getItemId());
              return false;    
