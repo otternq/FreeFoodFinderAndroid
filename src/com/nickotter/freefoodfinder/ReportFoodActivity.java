@@ -16,11 +16,24 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 
 
 public class ReportFoodActivity extends SherlockActivity {
 	
 	private static final String LOGTAG = "ReportFoodFragment";
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this); // Add this method.
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this); // Add this method.
+	}
 
     public void onCreate(Bundle savedInstanceState) {
     	Log.v(LOGTAG, "onCreateView: E");
@@ -42,6 +55,8 @@ public class ReportFoodActivity extends SherlockActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
     	Log.v(LOGTAG, "onOptionsItemSelected: E");
+    	
+    	EasyTracker.getTracker().sendEvent("ui_action", "button_press", item.getTitle().toString(), (long)item.getItemId());
     	
     	switch(item.getItemId()) {
     		case android.R.id.home:

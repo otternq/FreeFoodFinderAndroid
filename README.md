@@ -15,6 +15,7 @@ is expected to be contained at `res/values/privateStrings.xml`
 <resources>
     <string name="mongolabAPIKey">YOUR_MONGOLAB_API_KEY_HERE</string>
     <string name="googleAPIKey">YOUR_GOOGLE_API_KEY_HERE</string>
+    <string name="googleAnalyticsKey">YOUR_GOOGLE_ANALYTICS_KEY</string>
 </resources>
 ```
 
