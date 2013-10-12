@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 
 import com.actionbarsherlock.view.MenuItem;
+import com.google.analytics.tracking.android.EasyTracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -37,11 +38,25 @@ public class MainActivity extends SherlockActivity implements AsyncResponse<Stri
 	protected GoogleMap mMap = null;
 	protected List<Marker> markers = new ArrayList<Marker>();
 	protected LatLng current;
+	
+	@Override
+	public void onStart() {
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this); // Add this method.
+	}
+	
+	@Override
+	public void onStop() {
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this); // Add this method.
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		Log.v(LOGTAG, "onCreate e");
 		
 		
 		
@@ -58,13 +73,26 @@ public class MainActivity extends SherlockActivity implements AsyncResponse<Stri
     				CameraUpdateFactory.newLatLng(current)
     		);
     		
+    		this.mMap.animateCamera(
+    			CameraUpdateFactory.zoomTo(21)
+    		);
+    		
     		this.loadReports();
     		
     	} else {
     		Log.v(LOGTAG, "initMap: unable to find location, sending to settings");
     		gps.showSettingsAlert();
     	}
+    	
+    	Log.v(LOGTAG, "onCreate x");
 		
+	}
+	
+	@Override
+	public void onResume() {
+		this.loadReports();
+		
+		super.onResume();
 	}
 
 	@Override
@@ -77,6 +105,8 @@ public class MainActivity extends SherlockActivity implements AsyncResponse<Stri
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) 
     {    
+	   EasyTracker.getTracker().sendEvent("ui_action", "button_press", item.getTitle().toString(), (long)item.getItemId());
+		
        switch (item.getItemId()) 
        {        
           case R.id.add_report:
